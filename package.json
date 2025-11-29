@@ -1,0 +1,23 @@
+{
+  "name": "mern-todo-app",
+  "version": "1.0.0",
+  "description": "MERN Stack Todo 練習項目",
+  "main": "backend/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start"
+  },
+  "keywords": ["mern", "todo", "react", "mongodb"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2"
+  }
+}
+
+
+
+
+

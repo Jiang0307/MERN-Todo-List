@@ -1,0 +1,204 @@
+.todo-item {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s;
+}
+
+.todo-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #667eea;
+}
+
+.todo-item.completed {
+  background: #f8f9fa;
+  opacity: 0.8;
+}
+
+.view-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.todo-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.checkbox-container {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 24px;
+  width: 24px;
+  background-color: #eee;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ddd;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  content: "✓";
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.todo-title {
+  flex: 1;
+  font-size: 1.3rem;
+  color: #333;
+  margin: 0;
+  word-break: break-word;
+}
+
+.todo-title.strikethrough {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-description {
+  color: #666;
+  margin: 0;
+  padding-left: 39px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.todo-description.faded {
+  color: #bbb;
+}
+
+.todo-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.todo-date {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.edit-btn:hover {
+  background: #e3f2fd;
+}
+
+.delete-btn:hover {
+  background: #ffebee;
+}
+
+.edit-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.edit-input:focus,
+.edit-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.edit-textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.save-btn,
+.cancel-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.save-btn {
+  background: #667eea;
+  color: white;
+  font-weight: 600;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: #5568d3;
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #d0d0d0;
+}
+
+
+
+

@@ -1,0 +1,47 @@
+.todo-list-container {
+  margin-top: 20px;
+}
+
+.todo-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #555;
+}
+
+.todo-stats span {
+  padding: 5px 15px;
+  background: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.empty-hint {
+  font-size: 0.9rem !important;
+  color: #bbb;
+}
+
+
+
+
