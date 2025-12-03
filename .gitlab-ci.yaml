@@ -136,11 +136,12 @@ frontend:deploy:vercel:
     - npm install -g vercel
   script:
     - cd frontend
-    - vercel deploy \
+    - |
+      vercel deploy \
         --prod \
-        --token $VERCEL_TOKEN \
-        --project $VERCEL_PROJECT_ID \
-        --org $VERCEL_TEAM_ID \
+        --token "$VERCEL_TOKEN" \
+        --project "$VERCEL_PROJECT_ID" \
+        --org "$VERCEL_TEAM_ID" \
         --yes
   only:
     - main
@@ -152,16 +153,13 @@ frontend:deploy:vercel:
 backend:deploy:railway:
   stage: deploy
   image: ghcr.io/railwayapp/cli:latest
-
   script:
     - cd backend
     - echo "🚀 使用 Token 部署到 Railway（無登入、無檔案）..."
     - RAILWAY_TOKEN="$RAILWAY_TOKEN" railway up --service "$RAILWAY_SERVICE_ID"
-
   environment:
     name: production
     url: $RAILWAY_BACKEND_URL
-
   only:
     - main
   when: on_success
