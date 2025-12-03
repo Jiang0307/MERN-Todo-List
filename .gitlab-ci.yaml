@@ -162,7 +162,6 @@ backend:deploy:railway:
     - echo "🚀 部署後端到 Railway..."
     - cd backend
     - export RAILWAY_TOKEN=$RAILWAY_TOKEN
-    - railway login --token $RAILWAY_TOKEN
     - railway up
     - echo "✅ 後端已部署到 Railway"
   environment:
