@@ -161,6 +161,12 @@ backend:deploy:railway:
   script:
     - echo "🚀 部署後端到 Railway..."
     - cd backend
+    - echo "檢查 Railway Token 是否設定..."
+    - |
+      if [ -z "$RAILWAY_TOKEN" ]; then
+        echo "❌ RAILWAY_TOKEN 未設定！請在 GitLab CI/CD 變數中設定。"
+        exit 1
+      fi
     - export RAILWAY_TOKEN=$RAILWAY_TOKEN
     - railway up
     - echo "✅ 後端已部署到 Railway"
