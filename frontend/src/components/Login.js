@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
+// API Base URL - 統一配置
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +21,7 @@ function Login() {
 
     try {
       const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
-      const response = await axios.post(`http://localhost:5000${endpoint}`, {
+      const response = await axios.post(`${API_BASE_URL}${endpoint}`, {
         email,
         password
       });

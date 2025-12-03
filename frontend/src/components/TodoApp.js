@@ -5,7 +5,9 @@ import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/todos';
+// API Base URL - 統一配置
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE_URL}/api/todos`;
 
 function TodoApp() {
   const [todos, setTodos] = useState([]);
