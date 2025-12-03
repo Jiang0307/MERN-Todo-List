@@ -154,26 +154,14 @@ frontend:deploy:vercel:
 # ============================================
 backend:deploy:railway:
   stage: deploy
-  # 使用 Railway 官方 CLI Docker 映像
   image: ghcr.io/railwayapp/cli:latest
   before_script:
     - echo "🔐 驗證 Railway 認證..."
-    # 檢查 RAILWAY_TOKEN 是否設置（不顯示實際值）
-    - |
-      if [ -z "$RAILWAY_TOKEN" ]; then
-        echo "❌ 錯誤：RAILWAY_TOKEN 環境變數未設置"
-        echo "請在 GitLab 專案設定 → CI/CD → Variables 中設置 RAILWAY_TOKEN"
-        exit 1
-      else
-        echo "✅ RAILWAY_TOKEN 已設置（長度：${#RAILWAY_TOKEN} 字符）"
-      fi
-    # Railway CLI 會自動使用 RAILWAY_TOKEN 環境變數進行認證
     - railway whoami || (echo "⚠️ 無法驗證 Railway 認證，請確認使用的是專案 Token（Project Token）" && exit 1)
   script:
     - echo "🚀 部署後端到 Railway..."
     - echo "📦 服務 ID: $RAILWAY_SERVICE_ID"
     - cd backend
-    # Railway CLI 會自動使用 RAILWAY_TOKEN 環境變數進行認證
     - railway up --service "$RAILWAY_SERVICE_ID"
     - echo "✅ 後端已部署到 Railway"
   environment:
