@@ -157,13 +157,11 @@ backend:deploy:railway:
   image: ghcr.io/railwayapp/cli:latest
   before_script:
     - echo "🔐 驗證 Railway 認證..."
-    - railway whoami || (echo "⚠️ 無法驗證 Railway 認證，請確認使用的是專案 Token（Project Token）" && exit 1)
+    - railway whoami || (echo "⚠️ 無法驗證 Railway 認證，請檢查 RAILWAY_TOKEN" && exit 1)
   script:
     - echo "🚀 部署後端到 Railway..."
-    - echo "📦 服務 ID: $RAILWAY_SERVICE_ID"
     - cd backend
     - railway up --service "$RAILWAY_SERVICE_ID"
-    - echo "✅ 後端已部署到 Railway"
   environment:
     name: production
     url: $RAILWAY_BACKEND_URL
