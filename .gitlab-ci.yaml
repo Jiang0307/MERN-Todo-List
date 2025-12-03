@@ -145,7 +145,7 @@ frontend:deploy:vercel:
     url: $VERCEL_URL
   only:
     - main
-  when: manual
+  when: on_success
   needs:
     - frontend:docker:build
 
@@ -169,6 +169,6 @@ backend:deploy:railway:
     url: $RAILWAY_BACKEND_URL
   only:
     - main
-  when: manual
+  when: on_success
   needs:
     - backend:docker:build
