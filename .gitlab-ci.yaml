@@ -155,18 +155,23 @@ frontend:deploy:vercel:
 backend:deploy:railway:
   stage: deploy
   image: ghcr.io/railwayapp/cli:latest
+
   before_script:
-    - echo "🔐 驗證 Railway 認證..."
-    - echo "RAILWAY_TOKEN length= $(printf "%s" "$RAILWAY_TOKEN" | wc -c)"
-    - echo "RAILWAY_TOKEN first 5 chars= $(printf "%s" "$RAILWAY_TOKEN" | cut -c1-5)"
-    - railway whoami || (echo "⚠️ 無法驗證 Railway 認證，請檢查 RAILWAY_TOKEN" && exit 1)
+    - echo "🔐 使用 Railway Token 登入（不寫入檔案）..."
+    - railway login --token "$RAILWAY_TOKEN"
+
+    - echo "🔍 驗證 Railway 身份..."
+    - railway whoami || (echo "❌ Railway Token 無效" && exit 1)
+
   script:
     - echo "🚀 部署後端到 Railway..."
     - cd backend
     - railway up --service "$RAILWAY_SERVICE_ID"
+
   environment:
     name: production
     url: $RAILWAY_BACKEND_URL
+
   only:
     - main
   when: on_success
