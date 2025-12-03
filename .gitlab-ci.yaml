@@ -131,19 +131,19 @@ backend:docker:build:
 # ============================================
 frontend:deploy:vercel:
   stage: deploy
+  image: node:20-alpine
+  before_script:
+    - npm install -g vercel
   script:
-    - npm install --global vercel
-    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-    - vercel build --prod --token=$VERCEL_TOKEN
-    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
-  environment:
-    name: production
-    url: $VERCEL_FRONTEND_URL
+    - cd frontend
+    - vercel deploy --prod \
+        --token $VERCEL_TOKEN \
+        --project prj_BzZqSxe968sjOAaLxSAxJysYZ2ZT \
+        --org team_wEdHjcMfFFcSQLL9i0t8v5AF \
+        --yes
   only:
     - main
   when: on_success
-  needs:
-    - frontend:docker:build
 
 # ============================================
 # CD 階段：部署後端到 Railway（可選）
@@ -153,6 +153,7 @@ backend:deploy:railway:
   image: ghcr.io/railwayapp/cli:latest
 
   script:
+    - cd backend
     - echo "🚀 使用 Token 部署到 Railway（無登入、無檔案）..."
     - RAILWAY_TOKEN="$RAILWAY_TOKEN" railway up --service "$RAILWAY_SERVICE_ID"
 
