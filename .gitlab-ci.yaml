@@ -131,18 +131,14 @@ backend:docker:build:
 # ============================================
 frontend:deploy:vercel:
   stage: deploy
-  image: node:${NODE_VERSION}-alpine
-  before_script:
-    - apk add --no-cache curl
-    - npm install -g vercel
   script:
-    - echo "🚀 部署前端到 Vercel..."
-    - cd frontend
-    - vercel --prod --token $VERCEL_TOKEN --yes
-    - echo "✅ 前端已部署到 Vercel"
+    - npm install --global vercel
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
   environment:
     name: production
-    url: $VERCEL_URL
+    url: $VERCEL_FRONTEND_URL
   only:
     - main
   when: on_success
