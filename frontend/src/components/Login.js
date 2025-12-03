@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import Notification from './Notification';
 
 // API Base URL - 統一配置
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -12,6 +13,8 @@ function Login() {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,7 +30,8 @@ function Login() {
       });
 
       if (isRegister) {
-        alert('註冊成功！請登入');
+        setNotificationMessage('註冊成功！請登入');
+        setShowNotification(true);
         setIsRegister(false);
         setPassword('');
       } else {
@@ -87,6 +91,12 @@ function Login() {
           </button>
         </p>
       </div>
+      
+      <Notification
+        isOpen={showNotification}
+        message={notificationMessage}
+        onConfirm={() => setShowNotification(false)}
+      />
     </div>
   );
 }
