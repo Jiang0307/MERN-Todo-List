@@ -167,16 +167,17 @@ backend:deploy:railway:
         echo "❌ RAILWAY_TOKEN 未設定！請在 GitLab CI/CD 變數中設定。"
         exit 1
       fi
+    - echo "驗證 Railway CLI 安裝..."
+    - npx @railway/cli --version || echo "警告：無法取得版本，但繼續嘗試部署"
+    - echo "設定 Railway 認證..."
     - export RAILWAY_TOKEN=$RAILWAY_TOKEN
-    - echo "Railway CLI 版本："
-    - railway --version || echo "無法取得版本"
     - |
       if [ -n "$RAILWAY_SERVICE_ID" ]; then
         echo "使用指定的服務 ID: $RAILWAY_SERVICE_ID"
-        railway up --service=$RAILWAY_SERVICE_ID
+        npx @railway/cli up --service=$RAILWAY_SERVICE_ID --token=$RAILWAY_TOKEN
       else
-        echo "嘗試自動部署（需要專案已連結）..."
-        railway up || railway link --service backend && railway up
+        echo "嘗試自動部署（需要 Railway 專案已連結）..."
+        npx @railway/cli up --token=$RAILWAY_TOKEN
       fi
     - echo "✅ 後端已部署到 Railway"
   environment:
