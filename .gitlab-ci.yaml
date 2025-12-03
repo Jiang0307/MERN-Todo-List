@@ -18,7 +18,7 @@ frontend:test:
   script:
     - echo "🔍 開始測試前端..."
     - cd frontend
-    - npm ci
+    - npm install
     - echo "✅ 依賴安裝完成"
     - npm run build
     - echo "✅ 前端建置成功"
