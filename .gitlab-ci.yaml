@@ -136,13 +136,7 @@ frontend:deploy:vercel:
     - npm install -g vercel
   script:
     - cd frontend
-    - |
-      vercel deploy \
-        --prod \
-        --token "$VERCEL_TOKEN" \
-        --project "$VERCEL_PROJECT_ID" \
-        --org "$VERCEL_TEAM_ID" \
-        --yes
+    - vercel --prod --yes --token "$VERCEL_TOKEN"
   only:
     - main
   when: on_success
