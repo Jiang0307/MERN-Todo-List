@@ -156,15 +156,18 @@ backend:deploy:railway:
   stage: deploy
   # 使用 Railway 官方 CLI Docker 映像
   image: ghcr.io/railwayapp/cli:latest
+  variables:
+    # Railway CLI 會自動讀取 RAILWAY_TOKEN 環境變數進行認證
+    RAILWAY_TOKEN: $RAILWAY_TOKEN
   before_script:
     - echo "🔐 驗證 Railway 認證..."
-    # 使用 RAILWAY_TOKEN 進行認證驗證
-    - railway whoami --token "$RAILWAY_TOKEN" || (echo "⚠️ 無法驗證 Railway 認證，請檢查 RAILWAY_TOKEN" && exit 1)
+    # Railway CLI 會自動使用 RAILWAY_TOKEN 環境變數
+    - railway whoami || (echo "⚠️ 無法驗證 Railway 認證，請檢查 RAILWAY_TOKEN" && exit 1)
   script:
     - echo "🚀 部署後端到 Railway..."
     - cd backend
-    # 明確使用 RAILWAY_TOKEN 和 RAILWAY_SERVICE_ID 進行部署
-    - railway up --service "$RAILWAY_SERVICE_ID" --token "$RAILWAY_TOKEN"
+    # Railway CLI 會自動使用 RAILWAY_TOKEN 環境變數進行認證
+    - railway up --service "$RAILWAY_SERVICE_ID"
     - echo "✅ 後端已部署到 Railway"
   environment:
     name: production
