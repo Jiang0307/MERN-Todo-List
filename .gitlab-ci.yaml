@@ -156,15 +156,14 @@ backend:deploy:railway:
   stage: deploy
   image: node:${NODE_VERSION}-alpine
   before_script:
-    - apk add --no-cache bash
+    - apk add --no-cache curl bash
+    - curl -fsSL https://railway.app/install.sh | sh
   script:
     - cd backend
-    - |
-      if [ -n "$RAILWAY_PROJECT_ID" ] && [ -n "$RAILWAY_SERVICE_ID" ]; then
-        npx -y @railway/cli@latest up --project "$RAILWAY_PROJECT_ID" --service "$RAILWAY_SERVICE_ID" --ci
-      else
-        npx -y @railway/cli@latest up --ci
-      fi
+    - railway up \
+        --project "$RAILWAY_PROJECT_ID" \
+        --service "$RAILWAY_SERVICE_ID" \
+        --ci
   environment:
     name: production
     url: $RAILWAY_BACKEND_URL
