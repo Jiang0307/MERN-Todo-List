@@ -250,12 +250,14 @@ app.listen(PORT, '0.0.0.0', () => {
     ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
     : null;
   
-  console.log(`🚀 服務器運行在 http://localhost:${PORT}`);
-  
   if (publicUrl) {
+    // Railway 部署環境
+    console.log(`🚀 服務器在容器內部監聽端口 ${PORT}`);
     console.log(`🌐 公開 URL: ${publicUrl}`);
-    console.log(`📡 外網用戶可通過此 URL 訪問你的服務器`);
+    console.log(`📡 外網用戶請使用公開 URL 訪問你的服務器`);
   } else {
+    // 本地開發環境
+    console.log(`🚀 服務器運行在 http://localhost:${PORT}`);
     console.log(`📱 同一網絡設備可訪問: http://你的IP地址:${PORT}`);
     console.log(`💡 提示: 在終端執行 'ipconfig' (Windows) 或 'ifconfig' (Mac/Linux) 查看你的 IP 地址`);
   }
