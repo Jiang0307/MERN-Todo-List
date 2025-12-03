@@ -157,65 +157,22 @@ backend:deploy:railway:
   image: node:${NODE_VERSION}-alpine
   before_script:
     - apk add --no-cache curl bash
-    - echo "安裝 Railway CLI..."
-    - npm install -g @railway/cli
-    - echo "檢查 Railway CLI 安裝..."
-    - npm list -g @railway/cli || echo "警告：無法列出已安裝的套件"
-    - echo "測試 Railway CLI 命令..."
-    - railway --version 2>&1 || echo "railway 命令不可用，將使用 npx"
+    - curl -fsSL https://railway.app/install.sh | sh
   script:
     - echo "🚀 部署後端到 Railway..."
     - cd backend
-    - echo "檢查必要環境變數..."
     - |
       if [ -z "$RAILWAY_TOKEN" ]; then
-        echo "❌ RAILWAY_TOKEN 未設定！請在 GitLab CI/CD 變數中設定。"
+        echo "❌ RAILWAY_TOKEN 未設定"
         exit 1
       fi
-      echo "✅ RAILWAY_TOKEN 已設定"
-      if [ -n "$RAILWAY_SERVICE_ID" ]; then
-        echo "✅ RAILWAY_SERVICE_ID 已設定: $RAILWAY_SERVICE_ID"
-      else
-        echo "⚠️  RAILWAY_SERVICE_ID 未設定，將嘗試自動部署"
-      fi
-    - echo "設定 Railway 認證環境變數..."
     - export RAILWAY_TOKEN=$RAILWAY_TOKEN
-    - echo "開始部署到 Railway..."
     - |
-      DEPLOY_SUCCESS=false
-      
-      # 方法 1: 使用全局 railway 命令（如果可用）
-      if command -v railway >/dev/null 2>&1; then
-        echo "嘗試方法 1: 使用全局 railway 命令..."
-        if [ -n "$RAILWAY_SERVICE_ID" ]; then
-          railway up --service $RAILWAY_SERVICE_ID 2>&1 && DEPLOY_SUCCESS=true || echo "方法 1 失敗"
-        else
-          railway up 2>&1 && DEPLOY_SUCCESS=true || echo "方法 1 失敗"
-        fi
+      if [ -n "$RAILWAY_SERVICE_NAME" ]; then
+        railway up --service=$RAILWAY_SERVICE_NAME -d
+      else
+        railway up -d
       fi
-      
-      # 方法 2: 使用 npx @railway/cli
-      if [ "$DEPLOY_SUCCESS" = "false" ]; then
-        echo "嘗試方法 2: 使用 npx @railway/cli..."
-        if [ -n "$RAILWAY_SERVICE_ID" ]; then
-          npx -y @railway/cli up --service $RAILWAY_SERVICE_ID 2>&1 && DEPLOY_SUCCESS=true || echo "方法 2 失敗"
-        else
-          npx -y @railway/cli up 2>&1 && DEPLOY_SUCCESS=true || echo "方法 2 失敗"
-        fi
-      fi
-      
-      # 如果所有方法都失敗
-      if [ "$DEPLOY_SUCCESS" = "false" ]; then
-        echo "❌ 所有部署方法都失敗了"
-        echo "請檢查："
-        echo "1. RAILWAY_TOKEN 是否正確設定"
-        echo "2. RAILWAY_SERVICE_ID 是否正確設定（如果使用）"
-        echo "3. Railway 專案是否已正確連結"
-        echo "4. 是否有足夠的權限進行部署"
-        exit 1
-      fi
-      
-      echo "✅ 部署成功！"
     - echo "✅ 後端已部署到 Railway"
   environment:
     name: production
