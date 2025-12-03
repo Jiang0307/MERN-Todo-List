@@ -246,8 +246,18 @@ const PORT = process.env.PORT || 5000;
 
 // 監聽所有網絡接口，讓同一網絡的設備可以訪問
 app.listen(PORT, '0.0.0.0', () => {
+  const publicUrl = process.env.RAILWAY_PUBLIC_DOMAIN 
+    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+    : null;
+  
   console.log(`🚀 服務器運行在 http://localhost:${PORT}`);
-  console.log(`📱 同一網絡設備可訪問: http://你的IP地址:${PORT}`);
-  console.log(`💡 提示: 在終端執行 'ipconfig' (Windows) 或 'ifconfig' (Mac/Linux) 查看你的 IP 地址`);
+  
+  if (publicUrl) {
+    console.log(`🌐 公開 URL: ${publicUrl}`);
+    console.log(`📡 外網用戶可通過此 URL 訪問你的服務器`);
+  } else {
+    console.log(`📱 同一網絡設備可訪問: http://你的IP地址:${PORT}`);
+    console.log(`💡 提示: 在終端執行 'ipconfig' (Windows) 或 'ifconfig' (Mac/Linux) 查看你的 IP 地址`);
+  }
 });
 
