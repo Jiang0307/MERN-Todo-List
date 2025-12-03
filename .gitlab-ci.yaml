@@ -157,8 +157,8 @@ backend:deploy:railway:
   image: ghcr.io/railwayapp/cli:latest
   before_script:
     - echo "🔐 驗證 Railway 認證..."
-    - echo "RAILWAY_TOKEN length: ${#RAILWAY_TOKEN}"
-    - echo "RAILWAY_TOKEN first 5 chars: ${RAILWAY_TOKEN:0:5}"
+    - echo "RAILWAY_TOKEN length: $(printf "%s" "$RAILWAY_TOKEN" | wc -c)"
+    - echo "RAILWAY_TOKEN first 5 chars: $(printf "%s" "$RAILWAY_TOKEN" | cut -c1-5)"
     - railway whoami || (echo "⚠️ 無法驗證 Railway 認證，請檢查 RAILWAY_TOKEN" && exit 1)
   script:
     - echo "🚀 部署後端到 Railway..."
