@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './../App.css';
 import TodoList from './TodoList';
@@ -16,14 +16,14 @@ function TodoApp() {
   const navigate = useNavigate();
 
   // 登出
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     localStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
     navigate('/login');
-  };
+  }, [navigate]);
 
   // 獲取所有 Todo
-  const fetchTodos = async () => {
+  const fetchTodos = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(API_URL);
@@ -41,7 +41,7 @@ function TodoApp() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [handleLogout]);
 
   useEffect(() => {
     // 檢查是否有 token
@@ -54,7 +54,7 @@ function TodoApp() {
     // 設定 axios 預設 header
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     fetchTodos();
-  }, [navigate]);
+  }, [navigate, fetchTodos]);
 
   // 創建新 Todo
   const createTodo = async (todoData) => {
