@@ -1,0 +1,96 @@
+stages:
+    - test
+      - build
+
+variables:
+    NODE_VERSION: "18"
+
+# 前端測試
+frontend:test:
+    stage: test
+    image: node:${NODE_VERSION}-alpine
+    script:
+        - echo "🔍 開始測試前端..."
+        - cd frontend
+        - npm ci
+        - npm run build
+        - echo "✅ 前端測試完成"
+    artifacts:
+        paths:
+            - frontend/build/
+        expire_in: 1 hour
+    only:
+        - main
+
+# 後端測試
+backend:test:
+    stage: test
+    image: node:${NODE_VERSION}-alpine
+    script:
+        - echo "🔍 開始測試後端..."
+        - cd backend
+        - npm ci
+        - echo "✅ 後端測試完成"
+    only:
+        - main
+
+# Docker 建置測試
+frontend:docker:test:
+    stage: test
+    image: docker:24
+    services:
+        - docker:24-dind
+    script:
+        - echo "🐳 測試前端 Dockerfile..."
+        - docker build -t frontend-test ./frontend
+        - echo "✅ 前端 Docker 建置成功"
+    only:
+        - main
+
+backend:docker:test:
+    stage: test
+    image: docker:24
+    services:
+        - docker:24-dind
+    script:
+        - echo "🐳 測試後端 Dockerfile..."
+        - docker build -t backend-test ./backend
+        - echo "✅ 後端 Docker 建置成功"
+    only:
+        - main
+
+# 建置並推送 Docker 映像檔（需要 GitLab Container Registry）
+frontend:docker:build:
+    stage: build
+    image: docker:24
+    services:
+        - docker:24-dind
+    before_script:
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    script:
+        - echo "🐳 建置前端 Docker 映像檔..."
+        - cd frontend
+        - docker build -t $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE/frontend:latest .
+        - docker push $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
+        - docker push $CI_REGISTRY_IMAGE/frontend:latest
+        - echo "✅ 前端映像檔已推送到 GitLab Registry"
+    only:
+        - main
+    when: on_success
+
+backend:docker:build:
+    stage: build
+    image: docker:24
+    services: docker:24-dind
+    before_script:
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    script:
+        - echo "🐳 建置後端 Docker 映像檔..."
+        - cd backend
+        - docker build -t $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE/backend:latest .
+        - docker push $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
+        - docker push $CI_REGISTRY_IMAGE/backend:latest
+        - echo "✅ 後端映像檔已推送到 GitLab Registry"
+    only:
+        - main
+    when: on_success
