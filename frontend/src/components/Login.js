@@ -84,6 +84,8 @@ function Login() {
             onClick={() => {
               setIsRegister(!isRegister);
               setError('');
+              setEmail('');
+              setPassword('');
             }}
             className="link-button"
           >
