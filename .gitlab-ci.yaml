@@ -156,22 +156,19 @@ backend:deploy:railway:
   stage: deploy
   image: node:${NODE_VERSION}-alpine
   before_script:
-    - apk add --no-cache curl bash
-    - curl -fsSL https://railway.app/install.sh | sh
+    - apk add --no-cache bash
   script:
-    - echo "🚀 部署後端到 Railway..."
+    - echo "🚀 部署後端到 Railway (npx 版)..."
     - cd backend
-    - |
-      if [ -z "$RAILWAY_TOKEN" ]; then
-        echo "❌ RAILWAY_TOKEN 未設定"
-        exit 1
+    - if [ -z "$RAILWAY_API_TOKEN" ]; then
+        echo "❌ RAILWAY_API_TOKEN 未設定";
+        exit 1;
       fi
-    - export RAILWAY_TOKEN=$RAILWAY_TOKEN
     - |
-      if [ -n "$RAILWAY_SERVICE_NAME" ]; then
-        railway up --service=$RAILWAY_SERVICE_NAME -d
+      if [ -n "$RAILWAY_PROJECT_ID" ] && [ -n "$RAILWAY_SERVICE_ID" ]; then
+        npx -y @railway/cli@latest up --project "$RAILWAY_PROJECT_ID" --service "$RAILWAY_SERVICE_ID" --ci
       else
-        railway up -d
+        npx -y @railway/cli@latest up --ci
       fi
     - echo "✅ 後端已部署到 Railway"
   environment:
@@ -180,5 +177,3 @@ backend:deploy:railway:
   only:
     - main
   when: on_success
-  needs:
-    - backend:docker:build
