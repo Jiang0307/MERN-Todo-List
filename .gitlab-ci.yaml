@@ -16,12 +16,9 @@ frontend:test:
   stage: test
   image: node:${NODE_VERSION}-alpine
   script:
-    - echo "🔍 開始測試前端..."
     - cd frontend
     - npm ci
-    - echo "✅ 依賴安裝完成"
     - npm run build
-    - echo "✅ 前端建置成功"
   artifacts:
     paths:
       - frontend/build/
@@ -38,11 +35,8 @@ backend:test:
   stage: test
   image: node:${NODE_VERSION}-alpine
   script:
-    - echo "🔍 開始測試後端..."
     - cd backend
     - npm ci
-    - echo "✅ 依賴安裝完成"
-    - echo "✅ 後端檢查完成（Node.js 不需要編譯）"
   only:
     - main
     - develop
@@ -57,10 +51,8 @@ frontend:docker:test:
   services:
     - docker:24-dind
   script:
-    - echo "🐳 測試前端 Dockerfile..."
     - cd frontend
     - docker build -t frontend-test:${CI_COMMIT_SHORT_SHA} .
-    - echo "✅ 前端 Docker 建置成功"
   only:
     - main
     - develop
@@ -75,10 +67,8 @@ backend:docker:test:
   services:
     - docker:24-dind
   script:
-    - echo "🐳 測試後端 Dockerfile..."
     - cd backend
     - docker build -t backend-test:${CI_COMMIT_SHORT_SHA} .
-    - echo "✅ 後端 Docker 建置成功"
   only:
     - main
     - develop
@@ -95,12 +85,10 @@ frontend:docker:build:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - echo "🐳 建置前端 Docker 映像檔..."
     - cd frontend
     - docker build -t $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE/frontend:latest .
     - docker push $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
     - docker push $CI_REGISTRY_IMAGE/frontend:latest
-    - echo "✅ 前端映像檔已推送到 GitLab Registry"
   only:
     - main
   when: on_success
@@ -116,12 +104,10 @@ backend:docker:build:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - echo "🐳 建置後端 Docker 映像檔..."
     - cd backend
     - docker build -t $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE/backend:latest .
     - docker push $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
     - docker push $CI_REGISTRY_IMAGE/backend:latest
-    - echo "✅ 後端映像檔已推送到 GitLab Registry"
   only:
     - main
   when: on_success
@@ -131,29 +117,40 @@ backend:docker:build:
 # ============================================
 frontend:deploy:vercel:
   stage: deploy
-  image: node:20-alpine
+  image: node:${NODE_VERSION}-alpine
   before_script:
+    - apk add --no-cache curl
     - npm install -g vercel
   script:
     - cd frontend
-    - vercel --prod --yes --token "$VERCEL_TOKEN"
+    - vercel --prod --token $VERCEL_TOKEN --yes
+  environment:
+    name: production
+    url: $VERCEL_URL
   only:
     - main
   when: on_success
+  needs:
+    - frontend:docker:build
 
 # ============================================
 # CD 階段：部署後端到 Railway（可選）
 # ============================================
 backend:deploy:railway:
   stage: deploy
-  image: ghcr.io/railwayapp/cli:latest
+  image: node:${NODE_VERSION}-alpine
+  before_script:
+    - apk add --no-cache curl
+    - npm install -g @railway/cli
+    - export PATH=$PATH:$(npm config get prefix)/bin
   script:
     - cd backend
-    - echo "🚀 使用 Token 部署到 Railway（無登入、無檔案）..."
-    - RAILWAY_TOKEN="$RAILWAY_TOKEN" railway up --service "$RAILWAY_SERVICE_ID"
+    - railway up --service "$RAILWAY_SERVICE_ID"
   environment:
     name: production
     url: $RAILWAY_BACKEND_URL
   only:
     - main
   when: on_success
+  needs:
+    - backend:docker:build
