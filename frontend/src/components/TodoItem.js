@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './TodoItem.css';
 import ConfirmDialog from './ConfirmDialog';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 function TodoItem({ todo, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -160,14 +161,14 @@ function TodoItem({ todo, onUpdate, onDelete }) {
                 className="edit-btn"
                 title="編輯"
               >
-                ✏️
+                <FaEdit />
               </button>
               <button
                 onClick={handleDeleteClick}
                 className="delete-btn"
                 title="刪除"
               >
-                🗑️
+                <FaTrash />
               </button>
             </div>
           </div>

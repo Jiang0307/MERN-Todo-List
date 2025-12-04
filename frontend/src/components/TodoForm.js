@@ -65,7 +65,7 @@ function TodoForm({ onCreateTodo }) {
         className="submit-btn"
         disabled={isSubmitting || !title.trim()}
       >
-        {isSubmitting ? '創建中...' : '➕ 新增 Todo'}
+        {isSubmitting ? '創建中...' : '新增 Todo'}
       </button>
     </form>
   );
