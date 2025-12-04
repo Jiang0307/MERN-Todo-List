@@ -98,4 +98,48 @@
   border: 1px solid #fcc;
 }
 
+/* 手機 */
+@media (max-width: 767px) {
+  .login-container {
+    padding: 15px;
+  }
 
+  .login-box {
+    padding: 25px 20px;
+    margin: 10px;
+  }
+
+  .login-box h1 {
+    font-size: 1.6rem;
+  }
+
+  .login-box h2 {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+  }
+
+  .login-box input {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .login-box button[type="submit"] {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
+/* 平板 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .login-box {
+    padding: 35px;
+  }
+
+  .login-box h1 {
+    font-size: 1.8rem;
+  }
+
+  .login-box h2 {
+    font-size: 1.3rem;
+  }
+}

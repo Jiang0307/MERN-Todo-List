@@ -42,6 +42,46 @@
   color: #bbb;
 }
 
+/* 手機 */
+@media (max-width: 767px) {
+  .todo-stats {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+  }
 
+  .todo-stats span {
+    width: 100%;
+    text-align: center;
+    padding: 8px 15px;
+  }
 
+  .todo-list {
+    gap: 12px;
+  }
+
+  .empty-state {
+    padding: 40px 15px;
+  }
+
+  .empty-state p {
+    font-size: 1rem;
+  }
+
+  .empty-hint {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* 平板 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .todo-stats {
+    padding: 12px;
+  }
+
+  .todo-stats span {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+}
 

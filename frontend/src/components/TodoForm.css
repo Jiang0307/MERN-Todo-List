@@ -66,6 +66,37 @@
   cursor: not-allowed;
 }
 
+/* 手機 */
+@media (max-width: 767px) {
+  .todo-form {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
 
+  .form-group {
+    margin-bottom: 15px;
+  }
 
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .submit-btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+/* 平板 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .todo-form {
+    padding: 20px;
+  }
+}
 

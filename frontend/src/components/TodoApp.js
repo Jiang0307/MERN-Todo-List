@@ -105,21 +105,13 @@ function TodoApp() {
     <div className="App">
       <div className="container">
         <header className="app-header">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+          <div className="header-container">
             <div>
               <h1>Welcome to MERN-Todo-List</h1>
             </div>
             <button 
               onClick={handleLogout}
-              style={{
-                padding: '8px 16px',
-                background: '#f44336',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '0.9rem'
-              }}
+              className="logout-btn"
             >
               登出
             </button>

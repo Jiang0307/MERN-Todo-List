@@ -26,3 +26,4 @@ function Notification({ isOpen, message, onConfirm, confirmText = '確定' }) {
 export default Notification;
 
 
+
