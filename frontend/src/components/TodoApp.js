@@ -107,8 +107,7 @@ function TodoApp() {
         <header className="app-header">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
             <div>
-              <h1>📝 Todo 應用</h1>
-              <p>使用 MERN Stack 建立的練習項目</p>
+              <h1>Welcome to MERN-Todo-List</h1>
             </div>
             <button 
               onClick={handleLogout}
