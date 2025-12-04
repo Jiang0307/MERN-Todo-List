@@ -145,7 +145,7 @@ backend:deploy:railway:
     - export PATH=$PATH:$(npm config get prefix)/bin
   script:
     - cd backend
-    - railway up --service "$RAILWAY_SERVICE_ID"
+    - npx railway up --service "$RAILWAY_SERVICE_ID"
   environment:
     name: production
     url: $RAILWAY_BACKEND_URL
