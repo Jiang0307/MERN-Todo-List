@@ -117,40 +117,29 @@ backend:docker:build:
 # ============================================
 frontend:deploy:vercel:
   stage: deploy
-  image: node:${NODE_VERSION}-alpine
+  image: node:20-alpine
   before_script:
-    - apk add --no-cache curl
     - npm install -g vercel
   script:
     - cd frontend
-    - vercel --prod --token $VERCEL_TOKEN --yes
-  environment:
-    name: production
-    url: $VERCEL_URL
+    - vercel --prod --yes --token "$VERCEL_TOKEN"
   only:
     - main
   when: on_success
-  needs:
-    - frontend:docker:build
 
 # ============================================
 # CD 階段：部署後端到 Railway（可選）
 # ============================================
 backend:deploy:railway:
   stage: deploy
-  image: node:${NODE_VERSION}-alpine
-  before_script:
-    - apk add --no-cache curl
-    - npm install -g @railway/cli
-    - export PATH=$PATH:$(npm config get prefix)/bin
+  image: ghcr.io/railwayapp/cli:latest
   script:
     - cd backend
-    - npx railway up --service "$RAILWAY_SERVICE_ID"
+    - RAILWAY_TOKEN="$RAILWAY_TOKEN"
+    - railway up --service "$RAILWAY_SERVICE_ID"
   environment:
     name: production
     url: $RAILWAY_BACKEND_URL
   only:
     - main
   when: on_success
-  needs:
-    - backend:docker:build
