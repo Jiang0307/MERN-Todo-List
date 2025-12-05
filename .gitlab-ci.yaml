@@ -1,4 +1,4 @@
-# GitLab CI/CD 配置
+# GitLab CI/CD 設定
 stages:
   - test
   - build
