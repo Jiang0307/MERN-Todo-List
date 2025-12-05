@@ -17,7 +17,7 @@
 
 .login-box h1 {
   text-align: center;
-  color: #667eea;
+  color: #2196F3;
   font-size: 2rem;
   margin-bottom: 10px;
 }
@@ -45,12 +45,12 @@
 
 .login-box input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #2196F3;
 }
 
 .login-box button[type="submit"] {
   padding: 12px;
-  background: #667eea;
+  background: #2196F3;
   color: white;
   border: none;
   border-radius: 8px;
@@ -60,7 +60,7 @@
 }
 
 .login-box button[type="submit"]:hover:not(:disabled) {
-  background: #5568d3;
+  background: #1976D2;
 }
 
 .login-box button[type="submit"]:disabled {
@@ -77,7 +77,7 @@
 .link-button {
   background: none;
   border: none;
-  color: #667eea;
+  color: #2196F3;
   cursor: pointer;
   text-decoration: underline;
   margin-left: 5px;
@@ -85,7 +85,7 @@
 }
 
 .link-button:hover {
-  color: #5568d3;
+  color: #1976D2;
 }
 
 .error-message {

@@ -22,7 +22,7 @@ function TodoItem({ todo, onUpdate, onDelete }) {
       return;
     }
 
-    console.log('💾 儲存編輯:', { 
+    console.log('儲存編輯:', { 
       id: todo._id, 
       原標題: todo.title, 
       新標題: editTitle.trim(),
@@ -115,7 +115,7 @@ function TodoItem({ todo, onUpdate, onDelete }) {
               className="save-btn"
               disabled={isUpdating || !editTitle.trim()}
             >
-              {isUpdating ? '儲存中...' : '💾 儲存'}
+              {isUpdating ? '儲存中...' : '儲存'}
             </button>
             <button
               onClick={handleCancel}

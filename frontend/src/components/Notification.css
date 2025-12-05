@@ -64,9 +64,9 @@
 
 .notification-btn {
   padding: 10px 32px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
+  background: white;
+  color: #333;
+  border: 2px solid #2196F3;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
@@ -76,13 +76,15 @@
 }
 
 .notification-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: #f0f0f0;
+  border-color: #2196F3;
 }
 
 .notification-btn:active {
   transform: translateY(0);
 }
+
+
 
 
 

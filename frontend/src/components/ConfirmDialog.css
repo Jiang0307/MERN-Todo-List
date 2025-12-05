@@ -45,8 +45,8 @@
 .confirm-dialog-header {
   padding: 20px 24px;
   border-bottom: 1px solid #f0f0f0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: white;
+  color: #333;
 }
 
 .confirm-dialog-header h3 {
@@ -93,22 +93,16 @@
 
 .confirm-dialog-btn.cancel-btn:hover {
   background: #d0d0d0;
-  transform: translateY(-1px);
 }
 
 .confirm-dialog-btn.confirm-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #2196F3;
   color: white;
+  border: 2px solid #2196F3;
 }
 
 .confirm-dialog-btn.confirm-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: #1976D2;
+  border-color: #1976D2;
 }
-
-.confirm-dialog-btn:active {
-  transform: translateY(0);
-}
-
-
 

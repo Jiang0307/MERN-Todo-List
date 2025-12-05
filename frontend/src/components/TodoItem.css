@@ -8,7 +8,7 @@
 
 .todo-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: #667eea;
+  border-color: #2196F3;
 }
 
 .todo-item.completed {
@@ -59,8 +59,8 @@
 }
 
 .checkbox-container input:checked ~ .checkmark {
-  background-color: #667eea;
-  border-color: #667eea;
+  background-color: #2196F3;
+  border-color: #2196F3;
 }
 
 .checkbox-container input:checked ~ .checkmark:after {
@@ -157,7 +157,7 @@
 .edit-input:focus,
 .edit-textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #2196F3;
 }
 
 .edit-textarea {
@@ -182,13 +182,13 @@
 }
 
 .save-btn {
-  background: #667eea;
+  background: #2196F3;
   color: white;
   font-weight: 600;
 }
 
 .save-btn:hover:not(:disabled) {
-  background: #5568d3;
+  background: #1976D2;
 }
 
 .save-btn:disabled {
