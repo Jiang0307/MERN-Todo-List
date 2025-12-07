@@ -52,7 +52,7 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1>📝 Todo 應用</h1>
+        <h1>MERN-Todo-List</h1>
         <h2>{isRegister ? '註冊' : '登入'}</h2>
         
         {error && <div className="error-message">{error}</div>}
