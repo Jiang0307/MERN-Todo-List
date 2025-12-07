@@ -2,24 +2,6 @@
   margin-top: 20px;
 }
 
-.todo-stats {
-  display: flex;
-  justify-content: space-around;
-  padding: 15px;
-  background: #f0f0f0;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-weight: 600;
-  color: #555;
-}
-
-.todo-stats span {
-  padding: 5px 15px;
-  background: white;
-  border-radius: 20px;
-  font-size: 0.9rem;
-}
-
 .todo-list {
   display: flex;
   flex-direction: column;
@@ -44,18 +26,6 @@
 
 /* 手機 */
 @media (max-width: 767px) {
-  .todo-stats {
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px;
-  }
-
-  .todo-stats span {
-    width: 100%;
-    text-align: center;
-    padding: 8px 15px;
-  }
-
   .todo-list {
     gap: 12px;
   }
@@ -75,13 +45,5 @@
 
 /* 平板 */
 @media (min-width: 768px) and (max-width: 1024px) {
-  .todo-stats {
-    padding: 12px;
-  }
-
-  .todo-stats span {
-    font-size: 0.85rem;
-    padding: 6px 12px;
-  }
 }
 

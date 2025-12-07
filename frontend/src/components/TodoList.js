@@ -12,17 +12,8 @@ function TodoList({ todos, onUpdateTodo, onDeleteTodo }) {
     );
   }
 
-  const completedCount = todos.filter(todo => todo.completed).length;
-  const totalCount = todos.length;
-
   return (
     <div className="todo-list-container">
-      <div className="todo-stats">
-        <span>總共: {totalCount}</span>
-        <span>已完成: {completedCount}</span>
-        <span>未完成: {totalCount - completedCount}</span>
-      </div>
-
       <div className="todo-list">
         {todos.map(todo => (
           <TodoItem
